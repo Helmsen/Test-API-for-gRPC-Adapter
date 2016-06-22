@@ -1,0 +1,109 @@
+syntax="proto3";
+
+package fapra.teamsaltstack.testapi;
+
+message MessageDouble {
+  double val = 1;
+}
+message MessageFloat {
+  float val = 1;
+}
+message MessageInt32 {
+  int32 val = 1;
+}
+message MessageInt64 {
+  int64 val = 1;
+}
+message MessageUint32 {
+  uint32 val = 1;
+}
+message MessageUint64 {
+  uint64 val = 1;
+}
+message MessageSint32 {
+  sint32 val = 1;
+}
+message MessageSint64 {
+  sint64 val = 1;
+}
+message MessageFixed32 {
+  fixed32 val = 1;
+}
+message MessageFixed64 {
+  fixed64 val = 1;
+}
+message MessageSfixed32 {
+  sfixed32 val = 1;
+}
+message MessageSfixed64 {
+  sfixed64 val = 1;
+}
+message MessageBool {
+  bool val = 1;
+}
+message MessageString {
+  string val = 1;
+}
+message MessageBytes {
+  bytes val = 1;
+}
+message MessageEnum {
+  enum Enum {
+    VALUE_REQUEST = 0;
+    VALUE_RESPONSE = 1;
+  }
+  Enum enum = 0;
+}
+message MessageObject {
+  MessageString object = 1;
+}
+message MessageRepeated {
+  repeated MessageObject repeatedMessageObject = 1;
+}
+message MessageAll {
+  double a = 0;
+  float b = 1;
+  int32 c = 2;
+  int64 d = 3;
+  uint32 e = 4;
+  uint64 f = 5;
+  sint32 g = 6;
+  sint64 h = 7;
+  fixed32 i = 8;
+  fixed64 j = 9;
+  sfixed32 k = 10;
+  sfixed64 l = 11;
+  bool m = 12;
+  string n = 13;
+  bytes o = 14;
+  enum Enum {
+    VALUE_REQUEST = 0;
+    VALUE_RESPONSE = 1;
+  }
+  Enum p = 15;
+  MessageObject q = 16;
+  repeated MessageObject r = 17;
+}
+
+service TestService {
+  rpc processDouble(MessageDouble) returns (MessageDouble);
+  rpc processFloat(MessageFloat) returns (MessageFloat);
+  rpc processInt32(MessageInt32) returns (MessageInt32);
+  rpc processInt64(MessageInt64) returns (MessageInt64);
+  rpc processUint32(MessageUint32) returns (MessageUint32);
+  rpc processUint64(MessageUint64) returns (MessageUint64);
+  rpc processSint32(MessageSint32) returns (MessageSint32);
+  rpc processSint64(MessageSint64) returns (MessageSint64);
+  rpc processFixed32(MessageFixed32) returns (MessageFixed32);
+  rpc processFixed64(MessageFixed64) returns (MessageFixed64);
+  rpc processSfixed32(MessageSfixed32) returns (MessageSfixed32);
+  rpc processSfixed64(MessageSfixed64) returns (MessageSfixed64);
+  rpc processBool(MessageBool) returns (MessageBool);
+  rpc processString(MessageString) returns (MessageString);
+  rpc processBytes(MessageBytes) returns (MessageBytes);
+  rpc processEnum(MessageEnum) returns (MessageEnum);
+  rpc processObject(MessageObject) returns (MessageObject);
+  rpc processRepeated(MessageRepeated) returns (MessageRepeated);
+  rpc processAll(MessageAll) returns (MessageAll);
+  rpc processStreamedOutput(MessageObject) returns (stream MessageObject);
+}

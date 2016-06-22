@@ -1,0 +1,21 @@
+version: '2'
+services:
+  graphQlServer:
+    build: .
+    image: teamsaltstack:graphQlServer
+    dns:
+      - 8.8.8.8
+      - 8.8.4.4
+    ports:
+      - "50002:50002"
+    environment:
+      - API_HOST=192.168.10.21
+      - API_PORT=50001
+      - API_PROTO_PATH=/api/main.proto
+    volumes:
+      - ./volume:/api
+    entrypoint:
+      - "node"
+      - "/fapra/graphQlServer.js"
+      - "50002"
+

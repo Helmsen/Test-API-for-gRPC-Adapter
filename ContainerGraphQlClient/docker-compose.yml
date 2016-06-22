@@ -1,0 +1,11 @@
+version: '2'
+services:
+  graphQlClient:
+    build: .
+    image: teamsaltstack:graphQlClient
+    dns:
+      - 8.8.8.8
+      - 8.8.4.4
+    entrypoint:
+      - "/fapra/callMethods.sh"
+
