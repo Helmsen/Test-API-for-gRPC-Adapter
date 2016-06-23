@@ -1,6 +1,6 @@
 # Team SaltStack: gRPC Test Api and Adapter
 This project contains
- * two gRPC servers which implements a subset of the protobuf specs
+ * two gRPC servers which implement different subsets of the protobuf specs
  * corresponding gRPC clients (standalone)
  * a generic adapter for gRPC servers
  * a client for a specific GraphQl adapter instance
@@ -19,10 +19,10 @@ Run gRPC server, the corresponding adapter and the adapters client:
 3. start ContainerGraphQlClient
 
 ## ContainerGrpcServerSupportedSpec
-This container provides a nodejs implementation of the given gRPC service. The implemented methods are supported by the current adapter version (ContainerGraphQlServer).
+This container provides a nodejs implementation of the given gRPC service (specified in volume/main.proto). The implemented methods are supported by the current adapter version (ContainerGraphQlServer).
 
 ## ContainerGrpcServerFullSpec
-This container provides a nodejs implementation of the given gRPC service. The implemented methods are not yet supported by the current adapter version (ContainerGraphQlServer). But the adapter will support the whole scope of the used protobuf specs soon.
+This container provides a nodejs implementation of the given gRPC service (specified in volume/main.proto). The implemented methods are not yet supported by the current adapter version (ContainerGraphQlServer). But the adapter will support the whole scope of the used protobuf specs soon.
 
 ## ContainerGrpcClientSupportedSpec
 This container provides a standalone nodejs client to interact with the gRPC server located in ContainerGrpcServerSupportedSpec.
