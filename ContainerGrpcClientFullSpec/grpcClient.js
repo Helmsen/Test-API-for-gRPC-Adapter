@@ -5,7 +5,7 @@ var HOST = "localhost";
 var pathToProtoFile = "/api/main.proto";
 
 if (process.env.API_PROTO_PATH != null) {
-  pathToProtoFile = process.env.API_PROTO_PATH;
+    pathToProtoFile = process.env.API_PROTO_PATH;
 }
 if (process.env.GRPC_SERVER_HOST != null) {
   HOST = process.env.GRPC_SERVER_HOST;
@@ -42,11 +42,12 @@ processAll();
 processStreamedInput();
 processStreamedOutput();
 processStreamedInputOutput();
-
+processNested();
+processNestedExternal();
 
 // ===============================================================================
 function processDouble(){
-	var param = { 
+	var param = {
 		val: 1.1
 		};
 	console.log("");
@@ -339,7 +340,7 @@ function processObject(){
 function processRepeated(){
 	param = {
 		repeatedMessageObject: [{
-			object: { 
+			object: {
 				val: "OBJECT 1"
 			}
 		}, {
@@ -372,7 +373,7 @@ function processAll(){
 		g: 5,
 		h: 6,
 		i: 7,
-		j: 8, 
+		j: 8,
 		k: 9,
 		l: 10,
 		m: false,
@@ -512,4 +513,40 @@ function processStreamedInputOutput(){
 	console.log("");
 	console.log("# Method: processStreamedInputOutput()");
 	console.log("* Stream finished ");
+}
+// ===============================================================================
+function processNested(){
+	param = {
+		val: {
+			innerVal: "OBJECT"
+		}
+	};
+	console.log("");
+	console.log("# Method: processNested()");
+	console.log("* Request: ");
+	console.log(param);
+	stub.processNested(param, function(err, result){
+		console.log("");
+		console.log("# Method: processNested()");
+		console.log("* Result: ");
+		console.log(result);
+	});
+}
+// ===============================================================================
+function processNestedExternal(){
+	param = {
+		val: {
+			innerVal: "OBJECT"
+		}
+	};
+	console.log("");
+	console.log("# Method: processNested()");
+	console.log("* Request: ");
+	console.log(param);
+	stub.processNestedExternal(param, function(err, result){
+		console.log("");
+		console.log("# Method: processNested()");
+		console.log("* Result: ");
+		console.log(result);
+	});
 }

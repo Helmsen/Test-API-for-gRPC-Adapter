@@ -148,7 +148,7 @@ function processObject(call, callback){
 	console.log("* Param:");
 	console.log(call.request);
 	callback(null, {
-		object: { 
+		object: {
 			val: "RESPONSE"
 		}
 	});
@@ -186,7 +186,7 @@ function processAll(call, callback){
 		g: 555,
 		h: 666,
 		i: 777,
-		j: 888, 
+		j: 888,
 		k: 999,
 		l: 1010,
 		m: true,
@@ -225,7 +225,7 @@ function processStreamedInput(call, callback){
 	});
 	call.on('end', function(){
 		callback(null, {
-			object: { 
+			object: {
 				val: "OBJECT MODIFIED"
 			}
 		});
@@ -308,6 +308,30 @@ function processStreamedInputOutput(call, callback){
 	});
 }
 
+function processNested(call, callback){
+	console.log("");
+	console.log("# Method: processNested()");
+	console.log("* Param:");
+	console.log(call.request);
+	callback(null, {
+		val: {
+			innerVal: "RESPONSE"
+		}
+	});
+}
+
+function processNestedExternal(call, callback){
+	console.log("");
+	console.log("# Method: processNestedExternal()");
+	console.log("* Param:");
+	console.log(call.request);
+	callback(null, {
+		val: {
+			innerVal: "RESPONSE"
+		}
+	});
+}
+
 function getServer() {
   var server = new grpc.Server();
   server.addProtoService(testApi.TestService.service, {
@@ -332,7 +356,9 @@ function getServer() {
   	processAll: processAll,
   	processStreamedInput: processStreamedInput,
   	processStreamedOutput: processStreamedOutput,
-  	processStreamedInputOutput: processStreamedInputOutput
+  	processStreamedInputOutput: processStreamedInputOutput,
+    processNested: processNested,
+    processNestedExternal: processNestedExternal
   });
   return server;
 }

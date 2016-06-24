@@ -1,13 +1,15 @@
 # Team SaltStack: gRPC Test Api and Adapter
 This project contains
  * two gRPC servers which implement different subsets of the protobuf specs
+ * * the FullSpec containers try to use the whole protobuf and gRPC features
+ * * the supportedSpec containers use all features, which are supported by the current adapter version
  * corresponding gRPC clients (standalone)
  * a generic adapter for gRPC servers
  * a client for a specific GraphQl adapter instance
 
 These components are packed in docker containers and can be configured within the corresponding docker-compose.yml files.
 Also bash scripts are provided, to run the components without docker.
-All containers are preconfigured, but at least the ip of other containers must be set in order to communicate with them. 
+All containers are preconfigured, but at least the ip of other containers must be set in order to communicate with them.
 
 Check if the gRPC server are working without tha adapter:
 1. start ContainerGrpcServerFullSpec/ ContainerGrpcServerSupportedSpec
