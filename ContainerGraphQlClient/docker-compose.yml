@@ -8,4 +8,4 @@ services:
       - 8.8.4.4
     entrypoint:
       - "/fapra/callMethods.sh"
-
+      - "192.168.10.21"

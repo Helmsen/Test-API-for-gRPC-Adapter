@@ -8,7 +8,8 @@ This project contains
  * a client for a specific GraphQl adapter instance
 
 These components are packed in docker containers and can be configured within the corresponding docker-compose.yml files.
-Also bash scripts are provided, to run the components without docker.
+You can find them in the folders with prefix "Container".
+Also bash scripts are provided in these folders, to run the components without docker.
 All containers are preconfigured, but at least the ip of other containers must be set in order to communicate with them.
 
 Check if the gRPC server are working without tha adapter:
@@ -19,6 +20,8 @@ Run gRPC server, the corresponding adapter and the adapters client:
 1. start ContainerGrpcServerSupportedSpec
 2. start ContainerGraphQlServer
 3. start ContainerGraphQlClient
+
+We also provide three client/ server scenarios which are defined by three docker-compose files and can be run without any configuration. They are located in the folders with prefix "Compose" and compose the existing docker containers.
 
 ## ContainerGrpcServerSupportedSpec
 This container provides a nodejs implementation of the given gRPC service (specified in volume/main.proto). The implemented methods are supported by the current adapter version (ContainerGraphQlServer).
@@ -37,3 +40,12 @@ This container provides a generic adapter for the gRPC server located in Contain
 
 ## ContainerGraphQlClient
 This container provides a bash script, which calls the methods provided by the gRPC adapter.
+
+## ComposeTestApiSupportedSpec
+Creates and runs a gRPC server (ContainerGrpcServerSupportedSpec) and client (ContainerGrpcClientSupportedSpec) which calls all provided methods.
+
+## ComposeTestApiFullSpec
+Creates and runs a gRPC server (ContainerGrpcServerFullSpec) and client (ContainerGrpcClientFullSpec) which calls all provided methods.
+
+## ComposeTestApiAdapter
+Creates and runs a gRPC server (ContainerGrpcServerSupportedSpec), a gRPC adapter (ContainerGraphQlServer) and a client for the gRPC adapter (ContainerGraphQlClient) which calls all provided methods.

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-HOST="192.168.10.21"
+HOST=$1
 PORT=50002
 
 printInfo(){
