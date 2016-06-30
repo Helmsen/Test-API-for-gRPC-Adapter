@@ -19,3 +19,4 @@ RUN mkdir -p /fapra
 # -----
 COPY callMethods.sh /fapra/callMethods.sh
 
+CMD ["/fapra/callMethods.sh", "192.168.10.21", "50002"]
