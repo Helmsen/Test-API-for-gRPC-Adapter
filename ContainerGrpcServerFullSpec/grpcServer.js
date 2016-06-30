@@ -229,6 +229,9 @@ function processStreamedInput(call, callback){
 				val: "OBJECT MODIFIED"
 			}
 		});
+		console.log("");
+		console.log("# Method: processStreamedInput()");
+		console.log("* Stream closed");
 	});
 }
 
@@ -302,8 +305,8 @@ function processStreamedInputOutput(call, callback){
 			}
 		});
 		console.log("");
-	console.log("# Method: processStreamedInputOutput()");
-	console.log("* Stream finished ");
+		console.log("# Method: processStreamedInputOutput()");
+		console.log("* Stream finished ");
 		call.end();
 	});
 }
