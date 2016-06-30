@@ -1,10 +1,8 @@
-# Generic gRPC adapter
+# Generic gRPC Adapter
 
 * adapts a gRPC API and provides the methods as a GraphQL API
-* adapts the service specified in volume/main.proto
-* change configuration in docker-compose.yml or runWithoutContainer.sh
-  * change location of the proto file
-  * change host of the gRPC server
-  * change port of the gRPC server
-* use ```docker-compose up --build``` to build and run the adapter with docker
+* adapts the service specified in ./main.proto
+* build docker container with ```docker build .```
+* run docker container with ```docker run -p 50001:50001 <imageId>```
+* to connect to a running gRPC server, you have to set at least the environment variable API_HOST in the Dockerfile
 * use the bash script ```runWithoutContainer.sh``` to run the adapter without docker

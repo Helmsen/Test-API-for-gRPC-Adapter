@@ -1,7 +1,7 @@
-# Client for the gRPC adapter
+# Client for the gRPC Adapter
 
-* change configuration in callMethods.sh
-  * set host of the gRPC adapter
-  * set port of the gRPC adapter
-* use ```docker-compose up --build``` to build and run the client with docker
-* directly call the bash script ```callMethods.sh``` to run the server without docker
+* Client for the GraphQl server in /ContainerGraphQlServer
+* build docker container with ```docker build .```
+* run docker container with ```docker run <imageId>```
+* to connect to a running gRPC server, you have to set at least the environment variable API_HOST in the Dockerfile
+* use the bash script ```runWithoutContainer.sh``` to run the adapter without docker
