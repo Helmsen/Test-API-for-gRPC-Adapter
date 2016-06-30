@@ -2,7 +2,18 @@ syntax="proto3";
 
 package fapra.teamsaltstack.testapi;
 
-message MessageDouble {
+// comment
+
+// import
+// import public
+// nested types
+// data type any
+// oneof
+// maps (not repeatable)
+// packages inside message
+// options may annotate messages, services, etc
+
+message MessageDouble { // comment
   double val = 1;
 }
 message MessageFloat {
@@ -105,5 +116,7 @@ service TestService {
   rpc processObject(MessageObject) returns (MessageObject);
   rpc processRepeated(MessageRepeated) returns (MessageRepeated);
   rpc processAll(MessageAll) returns (MessageAll);
+  rpc processStreamedInput(stream MessageObject) returns (MessageObject);
   rpc processStreamedOutput(MessageObject) returns (stream MessageObject);
+  rpc processStreamedInputOutput(stream MessageObject) returns (stream MessageObject);
 }

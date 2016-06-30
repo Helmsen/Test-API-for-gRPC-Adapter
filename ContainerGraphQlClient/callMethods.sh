@@ -53,12 +53,63 @@ processBytes(){
   curl ${HOST}:${PORT}/graphql -XPOST -H "Content-Type:application/graphql" --data "{processBytesStatus(input: {requestId: \"${requestId}\"}){status, result{val}}}"
 }
 
+processEnum(){
+  printInfo "processEnum()"
+  curl ${HOST}:${PORT}/graphql -XPOST -H "Content-Type:application/graphql" --data "{processEnum(service:\"TestService\", input:{enum:\"VALUE_REQUEST\"}){requestId}}"
+}
+
+processObject(){
+  printInfo "processObject()"
+  curl ${HOST}:${PORT}/graphql -XPOST -H "Content-Type:application/graphql" --data "{processObject(service:\"TestService\", input:{object:{val:\"STRING1\"}}){requestId}}"
+}
+
+processRepeated(){
+  printInfo "processRepeated()"
+  curl ${HOST}:${PORT}/graphql -XPOST -H "Content-Type:application/graphql" --data "{processRepeated(service:\"TestService\", input:{repeatedMessageObject:[{object:{val:\"STRING1\"}},{object:{val:\"STRING2\"}}]}){requestId}}"
+}
+
+processStreamedInput(){
+  printInfo "processStreamedInput()"
+  out=$(curl ${HOST}:${PORT}/graphql -XPOST -H "Content-Type:application/graphql" --data "{processStreamedInput(service:\"TestService\", input:[{object:{val:\"INPUT1\"}},{object:{val:\"INPUT2\"}}]){requestId}}")
+  requestId=$( echo "$out" | grep "requestId")
+  requestId="$( sed 's/.*requestId\": \"\(.*\)\"/\1/' <<< $requestId)"
+
+  sleep 2
+  printInfo "processStreamedInputStreamSend()"
+  out=$(curl ${HOST}:${PORT}/graphql -XPOST -H "Content-Type:application/graphql" --data "{processStreamedInputStreamSend(requestId: \"${requestId}\",input:[{object:{val:\"INPUT1\"}},{object:{val:\"INPUT2\"}}]){requestId}}")
+
+  sleep 2
+  printInfo "processStreamedInputStreamEnd()"
+  out=$(curl ${HOST}:${PORT}/graphql -XPOST -H "Content-Type:application/graphql" --data "{processStreamedInputStreamEnd(requestId: \"${requestId}\"){requestId}}")
+
+  printInfo "processStreamedInputStatus() #1"
+  curl ${HOST}:${PORT}/graphql -XPOST -H "Content-Type:application/graphql" --data "{processStreamedInputStatus(input: {requestId: \"${requestId}\"}){status, result{object{val}}}}"
+}
+
+processStreamedOutput(){
+  printInfo "processStreamedOutput()"
+  out=$(curl ${HOST}:${PORT}/graphql -XPOST -H "Content-Type:application/graphql" --data "{processStreamedOutput(service:\"TestService\", input:{object:{val:\"INPUT\"}}){requestId}}")
+  requestId=$( echo "$out" | grep "requestId")
+  requestId="$( sed 's/.*requestId\": \"\(.*\)\"/\1/' <<< $requestId)"
+
+  printInfo "processStreamedOutputStatus() #1"
+  curl ${HOST}:${PORT}/graphql -XPOST -H "Content-Type:application/graphql" --data "{processStreamedOutputStatus(input: {requestId: \"${requestId}\"}){status, result{object{val}}}}"
+
+  printInfo "processStreamedOutputStatus() #2"
+  curl ${HOST}:${PORT}/graphql -XPOST -H "Content-Type:application/graphql" --data "{processStreamedOutputStatus(input: {requestId: \"${requestId}\"}){status, result{object{val}}}}"
+
+  printInfo "processStreamedOutputStatus() #3"
+  curl ${HOST}:${PORT}/graphql -XPOST -H "Content-Type:application/graphql" --data "{processStreamedOutputStatus(input: {requestId: \"${requestId}\"}){status, result{object{val}}}}"
+
+  printInfo "processStreamedOutputStatus() #4"
+  curl ${HOST}:${PORT}/graphql -XPOST -H "Content-Type:application/graphql" --data "{processStreamedOutputStatus(input: {requestId: \"${requestId}\"}){status, result{object{val}}}}"
+}
+
 processStreamedInputOutput(){
   printInfo "processStreamedInputOutput()"
   out=$(curl ${HOST}:${PORT}/graphql -XPOST -H "Content-Type:application/graphql" --data "{processStreamedInputOutput(service:\"TestService\", input:[{object:{val:\"INPUT1\"}},{object:{val:\"INPUT2\"}}]){requestId}}")
   requestId=$( echo "$out" | grep "requestId")
   requestId="$( sed 's/.*requestId\": \"\(.*\)\"/\1/' <<< $requestId)"
-  echo "$requestId"
 
   sleep 2
   printInfo "processStreamedInputOutputStreamSend()"
@@ -78,62 +129,6 @@ processStreamedInputOutput(){
 
   printInfo "processStreamedInputOutputStatus() #4"
   curl ${HOST}:${PORT}/graphql -XPOST -H "Content-Type:application/graphql" --data "{processStreamedInputOutputStatus(input: {requestId: \"${requestId}\"}){status, result{object{val}}}}"
-}
-
-processStreamedInput(){
-  printInfo "processStreamedInput()"
-  out=$(curl ${HOST}:${PORT}/graphql -XPOST -H "Content-Type:application/graphql" --data "{processStreamedInput(service:\"TestService\", input:[{object:{val:\"INPUT1\"}},{object:{val:\"INPUT2\"}}]){requestId}}")
-  requestId=$( echo "$out" | grep "requestId")
-  requestId="$( sed 's/.*requestId\": \"\(.*\)\"/\1/' <<< $requestId)"
-  echo "$requestId"
-
-  sleep 2
-  printInfo "processStreamedInputStreamSend()"
-  out=$(curl ${HOST}:${PORT}/graphql -XPOST -H "Content-Type:application/graphql" --data "{processStreamedInputStreamSend(requestId: \"${requestId}\",input:[{object:{val:\"INPUT1\"}},{object:{val:\"INPUT2\"}}]){requestId}}")
-  echo "$out"
-
-  sleep 2
-  printInfo "processStreamedInputStreamEnd()"
-  out=$(curl ${HOST}:${PORT}/graphql -XPOST -H "Content-Type:application/graphql" --data "{processStreamedInputStreamEnd(requestId: \"${requestId}\"){requestId}}")
-  echo "$out"
-
-  printInfo "processStreamedInputStatus() #1"
-  curl ${HOST}:${PORT}/graphql -XPOST -H "Content-Type:application/graphql" --data "{processStreamedInputStatus(input: {requestId: \"${requestId}\"}){status, result{object{val}}}}"
-}
-
-processStreamedOutput(){
-  printInfo "processStreamedOutput()"
-  out=$(curl ${HOST}:${PORT}/graphql -XPOST -H "Content-Type:application/graphql" --data "{processStreamedOutput(service:\"TestService\", input:{object:{val:\"INPUT\"}}){requestId}}")
-  requestId=$( echo "$out" | grep "requestId")
-  requestId="$( sed 's/.*requestId\": \"\(.*\)\"/\1/' <<< $requestId)"
-  echo "$requestId"
-
-  printInfo "processStreamedOutputStatus() #1"
-  curl ${HOST}:${PORT}/graphql -XPOST -H "Content-Type:application/graphql" --data "{processStreamedOutputStatus(input: {requestId: \"${requestId}\"}){status, result{object{val}}}}"
-
-  printInfo "processStreamedOutputStatus() #2"
-  curl ${HOST}:${PORT}/graphql -XPOST -H "Content-Type:application/graphql" --data "{processStreamedOutputStatus(input: {requestId: \"${requestId}\"}){status, result{object{val}}}}"
-
-  printInfo "processStreamedOutputStatus() #3"
-  curl ${HOST}:${PORT}/graphql -XPOST -H "Content-Type:application/graphql" --data "{processStreamedOutputStatus(input: {requestId: \"${requestId}\"}){status, result{object{val}}}}"
-
-  printInfo "processStreamedOutputStatus() #4"
-  curl ${HOST}:${PORT}/graphql -XPOST -H "Content-Type:application/graphql" --data "{processStreamedOutputStatus(input: {requestId: \"${requestId}\"}){status, result{object{val}}}}"
-}
-
-processEnum(){
-  printInfo "processEnum()"
-  curl ${HOST}:${PORT}/graphql -XPOST -H "Content-Type:application/graphql" --data "{processEnum(service:\"TestService\", input:{enum:\"VALUE_REQUEST\"}){requestId}}"
-}
-
-processObject(){
-  printInfo "processObject()"
-  curl ${HOST}:${PORT}/graphql -XPOST -H "Content-Type:application/graphql" --data "{processObject(service:\"TestService\", input:{object:{val:\"STRING1\"}}){requestId}}"
-}
-
-processRepeated(){
-  printInfo "processRepeated()"
-  curl ${HOST}:${PORT}/graphql -XPOST -H "Content-Type:application/graphql" --data "{processRepeated(service:\"TestService\", input:{repeatedMessageObject:[{object:{val:\"STRING1\"}},{object:{val:\"STRING2\"}}]}){requestId}}"
 }
 
 
