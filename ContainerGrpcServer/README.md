@@ -26,3 +26,4 @@ Implemented Features:
 * maps
 * package declaration within messages
 * options
+* extensions
