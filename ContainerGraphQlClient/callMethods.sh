@@ -36,7 +36,6 @@ processFloat(){
 
   printInfo "processFloatStatus() #1"
   curl ${HOST}:${PORT}/graphql -XPOST -H "Content-Type:application/graphql" --data "{processFloatStatus(input: {requestId: \"${requestId}\"}){status, result{val}}}"
-
 }
 
 processBytes(){
@@ -133,12 +132,12 @@ processStreamedInputOutput(){
 
 
 processDouble
-#processFloat
-#processEnum
-#processObject
-#processRepeated
+processFloat
+processEnum
+processObject
+processRepeated
 processStreamedInput
-#processStreamedOutput
-#processStreamedInputOutput
+processStreamedOutput
+processStreamedInputOutput
 #processBytes  #<--- you have to provide an url to a file on a ftp server to test this method
 #getApiDesc
