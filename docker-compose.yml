@@ -1,0 +1,34 @@
+version: '2'
+services:
+
+  grpctestapi:
+    build: ./ContainerGrpcTestAPI/
+    ports:
+      - "40031:40031"
+    environment:
+      - API_PROTO_PATH=/api/main.proto
+      - GRPC_SERVER_PORT=40031
+    command: ["node", "/fapra/grpcServer.js"]
+
+  adapter:
+    image: wilhelmstephan/grpc-to-graphql-adapter
+    links:
+      - grpctestapi:tssgrpcserver3
+    ports:
+      - "40022:40022"
+    environment:
+      - API_HOST=tssgrpcserver3
+      - API_PORT=40031
+      - API_PROTO_PATH=/api/main.proto
+    command: ["node", "/fapra/graphQlServer.js", "40022"]
+    depends_on:
+      - grpctestapi
+
+  adapterclient:
+    build: ./ContainerAdapterClient/
+    links:
+      - adapter:tssadapter3
+    depends_on:
+      - grpctestapi
+      - adapter
+    command: ["/fapra/callMethods.sh", "tssadapter3", "40022"]
