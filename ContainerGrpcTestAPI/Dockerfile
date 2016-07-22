@@ -33,5 +33,6 @@ COPY main.proto /api/main.proto
 ENV API_PROTO_PATH=/api/main.proto
 ENV GRPC_SERVER_PORT=40031
 
+VOLUME /api
 EXPOSE 40031
 CMD ["node", "/fapra/grpcServer.js"]

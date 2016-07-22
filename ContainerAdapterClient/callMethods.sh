@@ -124,6 +124,8 @@ processStreamedInputOutput(){
   curl ${HOST}:${PORT}/graphql -XPOST -H "Content-Type:application/graphql" --data "{processStreamedInputOutputStatus(input: {requestId: \"${requestId}\"}){status, result{object{val}}}}"
 }
 
+echo "Wait 10s until containers are initialized"
+sleep 10s
 
 processDouble
 processFloat

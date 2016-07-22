@@ -20,11 +20,11 @@ services:
       - API_HOST=tssgrpcserver3
       - API_PORT=40031
       - API_PROTO_PATH=/api/main.proto
-    volumes:
-      - ./volumeWithProtoFile:/api
-    command: ["node", "/fapra/graphQlServer.js", "40022"]
+    volumes_from:
+      - grpctestapi
     depends_on:
       - grpctestapi
+    command: ["node", "/fapra/graphQlServer.js", "40022"]
 
   adapterclient:
     build: ./ContainerAdapterClient/

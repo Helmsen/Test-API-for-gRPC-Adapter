@@ -6,6 +6,7 @@ package fapra.teamsaltstack.testapi;
 
 // import
 // import public
+// nested types
 // data type any
 // oneof
 // maps (not repeatable)
@@ -94,16 +95,6 @@ message MessageAll {
   MessageObject q = 16;
   repeated MessageObject r = 17;
 }
-message MessageNested {
-  message Inner {
-    string innerVal = 0;
-  }
-  Inner val = 0;
-}
-message MessageNestedExternal {
-  MessageNested.Inner val = 0;
-}
-
 
 service TestService {
   rpc processDouble(MessageDouble) returns (MessageDouble);
@@ -128,6 +119,4 @@ service TestService {
   rpc processStreamedInput(stream MessageObject) returns (MessageObject);
   rpc processStreamedOutput(MessageObject) returns (stream MessageObject);
   rpc processStreamedInputOutput(stream MessageObject) returns (stream MessageObject);
-  rpc processNested(MessageNested) returns (MessageNested);
-  rpc processNestedExternal(MessageNestedExternal) returns (MessageNestedExternal);
 }
